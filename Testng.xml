@@ -1,0 +1,8 @@
+<suite name="prueba final">
+    <test name="prueba final Testng">
+        <classes>
+            <class name="prueba_netflix"></class>
+        </classes>
+    </test>
+</suite>
+
