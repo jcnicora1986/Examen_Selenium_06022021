@@ -6,13 +6,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class NetflixHomePage extends BasePage {
-/*
-    public NetflixHomePage selectLanguage(){
-        driver.findElement(By.xpath("//img[@class='bui-avatar__image']")).click();
-        driver.findElement(By.xpath("//div[@lang='en-us']")).click();
-        NetflixHomePage nextPage= new NetflixHomePage(driver);
-        return nextPage;
-    }*/
+
 
     public NetflixHomePage(WebDriver remoteDriver){
         driver = remoteDriver;
@@ -51,32 +45,5 @@ public class NetflixHomePage extends BasePage {
 
 
     }
-
-
-//redButton
-
-    /*
-
-    public List<WebElement> getLink(){
-        return driver.findElements(By.tagName("a"));
-    }
-
-    public List<WebElement> getH1s(){
-        return driver.findElements(By.tagName("h1"));
-    }
-    public List<WebElement> getH2s(){
-        return driver.findElements(By.tagName("h2"));
-    }
-
-
-
-    public NetflixHomePage clickBtnRegister(){
-        driver.findElement(By.xpath("//span[@class='bui-button__text'][contains(text(), 'Register')]")).click();
-        NetflixHomePage nextPage= new NetflixHomePage(driver);
-        return nextPage;
-    }
-
-
-*/
 
 }
