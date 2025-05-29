@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager; // Add this import
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,8 +12,8 @@ public class BasePage {
     WebDriverWait wait;
 
     @BeforeTest
-    public void setup(){
-        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+    public void setup() {
+        WebDriverManager.chromedriver().setup(); // Replace System.setProperty
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);

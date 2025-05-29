@@ -40,23 +40,31 @@ public class prueba_netflix extends BasePage {
         Assert.assertNotEquals(tituloNetflix,tituloInicioSesionNetflix);
 
         List<WebElement> h1Title = netflixInicioSesionPage.getH1s();
-        System.out.println("Total de H1 encontrados>---"+h1Title.size());
+        System.out.println("Total de H1 encontrados>---" + h1Title.size());
 
         boolean h1TitleFound = false;
-        String textoTituloh1="";
-        for (WebElement h1 : h1Title) {
-            String tituloh1 = h1.getText();
-            System.out.println(">--"+tituloh1);
-            if (h1.getText().equals("Inicia sesión")||h1.getText().equals("Sign In")) {
-                textoTituloh1 = tituloh1;
+        String textoTituloh1 = ""; // Variable to store the found H1 text
+        for (WebElement h1Element : h1Title) { // Renamed loop variable for clarity
+            String currentH1Text = h1Element.getText();
+            System.out.println(">-- " + currentH1Text); // Log each H1 text found
+            if (currentH1Text.equals("Inicia sesión") || currentH1Text.equals("Sign In")) {
+                textoTituloh1 = currentH1Text; // Store the matched text
                 h1TitleFound = true;
+                // Optional: if only the first match is needed, uncomment the next line
+                // break; 
+            }
         }
 
-            Assert.assertTrue(h1TitleFound);
-            System.out.println("El titulo del h1: "+textoTituloh1);
+        // Assertions and logging should be outside the loop
+        Assert.assertTrue(h1TitleFound, "Expected H1 title 'Inicia sesión' or 'Sign In' was not found.");
 
-
-    }
+        if (h1TitleFound) {
+            System.out.println("El titulo del h1 encontrado: " + textoTituloh1);
+        } else {
+            // This else block will not be reached if the assertion above fails.
+            // However, it's good for logical completeness if the assertion were softer.
+            System.out.println("No se encontró el título H1 esperado ('Inicia sesión' o 'Sign In').");
+        }
 
         WebElement etextoFacebook = netflixInicioSesionPage.getTextoFacebook();
         String textoFacebook = etextoFacebook.getText();
@@ -96,28 +104,21 @@ public class prueba_netflix extends BasePage {
 
 
 
-        String url = driver.getCurrentUrl();
+        String currentUrl = driver.getCurrentUrl();
 
-        System.out.println(url);
+        System.out.println("Current URL after clicking 'Comienza Ya': " + currentUrl);
+        Assert.assertTrue(currentUrl.contains("signup"), "Expected URL to contain 'signup' but was: " + currentUrl);
     }
 
     @Test (dataProvider = "emails", dataProviderClass = DataProviderNetflix.class)
-    public void dataProviderEmailTest(String anEmail, String status){
-
+    public void dataProviderEmailTest(String anEmail, String status){ // status parameter is kept to match provider
         NetflixHomePage netflixHomePage = new NetflixHomePage(driver);
-
-        if (status.equals("false")){
-
-            netflixHomePage.fillingEmailComenzarYa(anEmail);
-            // localizo el mensaje de existo y agrego un assert!! :)
-            System.out.println("El email no valido a utilizar es: "+ anEmail);
-        }
-
-
+        System.out.println("Testing with email: " + anEmail + " (status from DP: " + status + ")"); // Log the status for info
+        netflixHomePage.fillingEmailComenzarYa(anEmail);
         netflixHomePage.clickBtnComienzaYa();
-
-
-
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("signup"),
+            "Expected URL to contain 'signup' for email '" + anEmail + "', but was: " + currentUrl);
     }
 
    @AfterTest
